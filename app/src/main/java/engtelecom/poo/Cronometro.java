@@ -71,6 +71,57 @@ public class Cronometro {
     /**
      * Construtor da classe
      * 
+     * Cria um cronômetro especificando todos os atributos do mesmo.
+     * Além disso, são especificados hora, minuto e segundo de partida.
+     * Útil para ser usado como um relógio.
+     * 
+     * @param tela objeto onde o visor do cronômetro será desenhado
+     * @param coordenadas coordenadas centrais do visor do cronômetro
+     * @param escala escala relativa do visor do cronômetro
+     * @param corAceso cor dos segmentos acesos
+     * @param corApagado cor dos segmentos apagados
+     * @param horaInicial hora de partida
+     * @param minutoInicial minuto de partida
+     * @param segundoInicial segundo de partida
+     */
+    public Cronometro(Draw tela, double[] coordenadas, int escala, Color corAceso, Color corApagado, int horaInicial, int minutoInicial, int segundoInicial){
+        this.tela = tela;
+        this.coordenadas = coordenadas;
+        this.escala = escala;
+        this.corAceso = corAceso;
+        this.corApagado = corApagado;
+        this.horaAtual = horaInicial;
+        this.minutoAtual = minutoInicial;
+        this.segundoAtual = segundoInicial;
+    }
+
+    /**
+     * Construtor da classe
+     * 
+     * Cria um cronômetro omitindo a cor do segmento apagado especificando hora,
+     * minuto e segundo de partida. Útil para usar como um relógio atual
+     * 
+     * @param tela objeto onde o visor do cronômetro será desenhado
+     * @param coordenadas coordenadas centrais do visor do cronômetro
+     * @param escala escala relativa do visor do cronômetro
+     * @param corAceso cor dos segmentos acesos
+     * @param horaInicial hora de partida
+     * @param minutoInicial minuto de partida
+     * @param segundoInicial segundo de partida
+     */
+    public Cronometro(Draw tela, double[] coordenadas, int escala, Color corAceso, int horaInicial, int minutoInicial, int segundoInicial){
+        this.tela = tela;
+        this.coordenadas = coordenadas;
+        this.escala = escala;
+        this.corAceso = corAceso;
+        this.horaAtual = horaInicial;
+        this.minutoAtual = minutoInicial;
+        this.segundoAtual = segundoInicial;
+    }
+
+    /**
+     * Construtor da classe
+     * 
      * Cria um cronômetro omitindo a cor dos segmentos apagados.
      * A cor dos segmentos apagados será calculada a partir da
      * cor dos segmentos acesos.
