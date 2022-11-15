@@ -109,6 +109,7 @@ public class ContadorRegressivo {
             segundoAtual = 59;
         } else if (minutoAtual == 0 && segundoAtual == 0){
             minutoAtual = 59;
+            segundoAtual = 59;
             horaAtual--;
         } else if (segundoAtual == 0){
             segundoAtual = 59;
