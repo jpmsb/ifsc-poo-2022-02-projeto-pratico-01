@@ -1,6 +1,7 @@
 package engtelecom.poo;
 
 import java.awt.Color;
+import java.time.LocalTime;
 
 import edu.princeton.cs.algs4.Draw;
 
@@ -14,7 +15,10 @@ public class Principal {
 
         d.clear(d.BLACK);
 
-        Cronometro cro = new Cronometro(d, new double[]{400,200}, 100, d.PINK);
+        int hora = LocalTime.now().getHour();
+        int minuto = LocalTime.now().getMinute();
+        int segundo = LocalTime.now().getSecond();
+        Cronometro cro = new Cronometro(d, new double[]{400,200}, 100, d.PINK, hora, minuto, segundo);
 
         // while (true){
         //     d.clear(d.BLACK);
