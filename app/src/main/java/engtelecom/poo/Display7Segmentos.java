@@ -170,55 +170,26 @@ public class Display7Segmentos {
      * @param corSegmento define a cor de cada segmento
      */
     public void desenhar(Color[] corSegmento){
-        // dimensão da área de tela (canvas)
-        // int dimensao = 800;
-
-        // Desenhando grade quadriculada
-        // int grade = (int) escala/10;
-        // tela.setPenColor(Color.DARK_GRAY);
-        // for (int i = 0; i <= dimensao; i+=grade) tela.line(i, 0, i, dimensao);
-        // for (int j = 0; j <= dimensao; j+=grade) tela.line(0, j, dimensao, j);
-
         // Coordenadas iniciais
         double xInicial = coordenadas[0] - (0.5*escala);
         double yInicial = coordenadas[1] - (1.05*escala);
 
-
         // -------------------------------------- //
         double xHorizontal = xInicial;
         double yHorizontal = yInicial;
-        // Criando os pontos para desenhar o segmento horizontal D
-        // double[] xHorizontal = {0.1*this.escala+xInicial, 0.2*this.escala+xInicial, 1.0*this.escala+xInicial, 1.1*this.escala+xInicial, 1.0*this.escala+xInicial, 0.2*this.escala+xInicial};
-        // double[] yHorizontal = {0.2*this.escala+yInicial, 0.3*this.escala+yInicial, 0.3*this.escala+yInicial, 0.2*this.escala+yInicial, 0.1*this.escala+yInicial, 0.1*this.escala+yInicial};
 
-        // tela.setPenColor(corSegmento[3]);
-        // tela.filledPolygon(xHorizontal, yHorizontal);
-        // segmento.horizontal(corSegmento[3], xHorizontal, yHorizontal);
+        // Desenhando o segmento horizontal D
         this.segmento[3] = new Segmento(tela, xHorizontal, yHorizontal, escala, corSegmento[3]);
         // -------------------------------------- //
 
         // -------------------------------------- //
         // Desenhando o segmento horizontal G
-        // for (int i = 0; i < yHorizontal.length; i++) {
-        //     // Multiplicador padrão para alinhar a grade: 1.1
-        //     yHorizontal[i] += MULTIPLICADOR_Y*escala;
-        // }
-
-        // tela.setPenColor(corSegmento[6]);
-        // tela.filledPolygon(xHorizontal, yHorizontal);
         yHorizontal += MULTIPLICADOR_Y*escala;
         this.segmento[6] = new Segmento(tela, xHorizontal, yHorizontal, escala, corSegmento[6]);
         // -------------------------------------- //
 
         // -------------------------------------- //
         // Desenhando o segmento horizontal A
-        // for (int i = 0; i < yHorizontal.length; i++) {
-        //     // Multiplicador padrão para alinhar a grade: 1.1
-        //     yHorizontal[i] += MULTIPLICADOR_Y*escala; 
-        // }
-
-        // tela.setPenColor(corSegmento[0]);
-        // tela.filledPolygon(xHorizontal, yHorizontal);
         yHorizontal += MULTIPLICADOR_Y*escala;
         this.segmento[0] = new Segmento(tela, xHorizontal, yHorizontal, escala, corSegmento[0]);
         // -------------------------------------- //
@@ -228,42 +199,19 @@ public class Display7Segmentos {
         double yVertical = yInicial;
 
         // Motando os pontos para desenhar o segmento vertical E
-
         // Multiplicador padrão para alinhar à grade: 0.1
         yVertical += MULTIPLICADOR_Y_INICIAL*escala;
-
-        // double[] xVertical = {0.1*escala+xInicial, 0.2*escala+xInicial, 0.2*escala+xInicial, 0.1*escala+xInicial, 0*escala+xInicial, 0*escala+xInicial};
-        // double[] yVertical = {0.2*escala+yInicial, 0.3*escala+yInicial, 1.0*escala+yInicial, 1.1*escala+yInicial, 1.0*escala+yInicial, 0.3*escala+yInicial};
-
-        // tela.setPenColor(corSegmento[4]);
-        // tela.filledPolygon(xVertical, yVertical);
         this.segmento[4] = new Segmento(tela, xVertical, yVertical, escala, corSegmento[4], true);
         // -------------------------------------- //
 
         // -------------------------------------- //
         // Desenhando o segmento vertical C
-        // for (int i = 0; i < xVertical.length; i++) {
-        //     // Multiplicador padrão para alinhar à grade: 1.0
-        //     xVertical[i] += 1.0*escala;
-        // }
-
-        // tela.setPenColor(corSegmento[2]);
-        // tela.filledPolygon(xVertical, yVertical);
         xVertical += 0.8*escala;
         this.segmento[2] = new Segmento(tela, xVertical, yVertical, escala, corSegmento[2], true);
         // -------------------------------------- //
 
         // -------------------------------------- //
         // Desenhando o segmento vertical F
-        // for (int i = 0; i < xVertical.length; i++) {
-        //     xVertical[i] -= 1.0*escala;
-
-        //     // Multiplicador padrão para alinhar à grade: 1.1
-        //     yVertical[i] += MULTIPLICADOR_Y*escala;
-        // }
-
-        // tela.setPenColor(corSegmento[5]);
-        // tela.filledPolygon(xVertical, yVertical);
         xVertical -= 0.8*escala;
         yVertical += MULTIPLICADOR_Y*escala;
         this.segmento[5] = new Segmento(tela, xVertical, yVertical, escala, corSegmento[5],true);
@@ -271,12 +219,6 @@ public class Display7Segmentos {
 
         // -------------------------------------- //
         // Desenhando o segmento vertical B
-        // for (int i = 0; i < xVertical.length; i++) {
-        //     xVertical[i] += 1.0*escala;
-        // }
-
-        // tela.setPenColor(corSegmento[1]);
-        // tela.filledPolygon(xVertical, yVertical);
         xVertical += 0.8*escala;
         this.segmento[1] = new Segmento(tela, xVertical, yVertical, escala, corSegmento[1],true);
         // -------------------------------------- //
