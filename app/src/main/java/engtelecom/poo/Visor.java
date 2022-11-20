@@ -8,12 +8,12 @@ public class Visor {
      * Constante para representar os valores de cor
      * vermelho, verde e azul mínimos para compor uma cor clara
      */
-    private static final int LIMIAR_DE_CORES = 15;
+    private final int LIMIAR_DE_CORES = 70;
 
     /**
      * Vetor para alocar os 6 displays de 7 segmentos
      */
-    private Display7Segmentos[] digitos = new Display7Segmentos[6];
+    private Display7Segmentos[] digitos;
 
     /**
      * Vetor com as coordenadas centrais do visor
@@ -57,7 +57,11 @@ public class Visor {
         this.corAceso = corAceso;
         this.escala = escala;
         this.tela = tela;
+        this.digitos = new Display7Segmentos[6];
 
+        for (int i = 0; i < this.digitos.length; i++){
+            this.digitos[i] = new Display7Segmentos(tela, coordenadas, corAceso, corApagado, escala);
+        }
     }
 
     /**
@@ -72,56 +76,64 @@ public class Visor {
      * @param corAceso cor dos segmentos acesos
      */
     public Visor(Draw tela, double[] coordenadas, int escala, Color corAceso){
-        this(tela, coordenadas, escala, corAceso, obtemCorApagada(corAceso));
+        this.tela = tela;
+        this.coordenadas = coordenadas;
+        this.escala = escala;
+        this.corAceso = corAceso;
+        this.corApagado = obtemCorApagada(corAceso);
+        this.digitos = new Display7Segmentos[6];
+
+        for (int i = 0; i < this.digitos.length; i++){
+            this.digitos[i] = new Display7Segmentos(tela, coordenadas, corAceso, corApagado, escala);
+        }
     }
 
     /**
      * Desenha os dígitos das horas já na posição relativa correta
-     * @param hora
+     * @param hora inteiro representando a hora
      */
-    public void desenharHora(int hora){
+    private void desenharHora(int hora){
         // Dígito da unidade das horas
         double[] coordenadaHorUnidade = {coordenadas[0] - (2.0*escala), coordenadas[1]};
-        if (this.digitos[0] == null) this.digitos[0] = new Display7Segmentos(tela, coordenadaHorUnidade, corAceso, corApagado, escala);
+        this.digitos[0].setCoordenadas(coordenadaHorUnidade);
         this.digitos[0].desenhar(obtemUnidade(hora));
 
         // Dígito da dezena das horas
         double[] coordenadaHorDezena = {coordenadas[0] - (3.1*escala), coordenadas[1]};
-        if (this.digitos[1] == null) this.digitos[1] = new Display7Segmentos(tela, coordenadaHorDezena, corAceso, corApagado, escala);
+        this.digitos[1].setCoordenadas(coordenadaHorDezena);
         this.digitos[1].desenhar(obtemDezena(hora));
     }
 
     /**
      * Desenha os dígitos dos minutos já na posição relativa correta
-     * @param minuto
+     * @param minuto inteiro representando o minuto
      */
-    public void desenharMinuto(int minuto){
+    private void desenharMinuto(int minuto){
         // Dígito da unidade dos minutos
         double[] coordenadaMinUnidade = {coordenadas[0] + (0.5*escala), coordenadas[1]};
-        if (this.digitos[2] == null) this.digitos[2] = new Display7Segmentos(tela, coordenadaMinUnidade, corAceso, corApagado, escala);
+        this.digitos[2].setCoordenadas(coordenadaMinUnidade);
         this.digitos[2].desenhar(obtemUnidade(minuto));
 
         // Dígito da dezena dos minutos
         double[] coordenadaMinDezena = {coordenadas[0] - (0.6*escala), coordenadas[1]};
-        if (this.digitos[3] == null) this.digitos[3] = new Display7Segmentos(tela, coordenadaMinDezena, corAceso, corApagado, escala);
+        this.digitos[3].setCoordenadas(coordenadaMinDezena);
         this.digitos[3].desenhar(obtemDezena(minuto));
     }
 
     /**
      * Desenha os dígitos dos segundos já na posição relativa correta
-     * @param segundo
+     * @param segundo inteiro representando o segundo
      */
-    public void desenharSegundo(int segundo){
+    private void desenharSegundo(int segundo){
         // Dígito da unidade dos segundos
         double[] coordenadaSegUnidade = {coordenadas[0] + (3.0*escala), coordenadas[1]};
-        if (this.digitos[4] == null) this.digitos[4] = new Display7Segmentos(tela, coordenadaSegUnidade, corAceso, corApagado, escala);
+        this.digitos[4].setCoordenadas(coordenadaSegUnidade);
         this.digitos[4].desenhar(obtemUnidade(segundo));
 
         // Dígito da dezena dos segundos
         double[] coordenadaSegDezena = {coordenadas[0] + (1.9*escala), coordenadas[1]};
-        if (this.digitos[5] == null) this.digitos[5] = new Display7Segmentos(tela, coordenadaSegDezena, corAceso, corApagado, escala);
+        this.digitos[5].setCoordenadas(coordenadaSegDezena);
         this.digitos[5].desenhar(obtemDezena(segundo));
-
     }
 
     /**
@@ -129,23 +141,31 @@ public class Visor {
      * @param hora valor inteiro representando a hora
      * @param minuto valor inteiro representando os minutos
      * @param segundo valor inteiro representando os segundos
+     * @return verdadeiro se foi possível realizar o desenho do visor e falso, caso contrário.
      */
-    public void ver(int hora, int minuto, int segundo){
-        desenharHora(hora);
+    public boolean ver(int hora, int minuto, int segundo){
+        if (tela == null | escala <= 0 | hora < 0 | minuto < 0 | segundo < 0 | hora > 99 | minuto > 99 | segundo > 99) return false;
+        else {
+            // Desenha os dígitos que representam a hora
+            desenharHora(hora);
 
-        // Dois pontos
-        tela.setPenColor(corAceso);
-        tela.filledCircle(coordenadas[0] - (1.3*escala), coordenadas[1] + (0.2*escala), 10);
-        tela.filledCircle(coordenadas[0] - (1.3*escala), coordenadas[1] - (0.2*escala), 10);
+            // Dois pontos
+            tela.setPenColor(corAceso);
+            tela.filledCircle(coordenadas[0] - (1.3*escala), coordenadas[1] + (0.2*escala), 10);
+            tela.filledCircle(coordenadas[0] - (1.3*escala), coordenadas[1] - (0.2*escala), 10);
 
-        desenharMinuto(minuto);
+            // Desenha os dígitos que representam o minuto
+            desenharMinuto(minuto);
 
-        // Dois pontos
-        tela.setPenColor(corAceso);
-        tela.filledCircle(coordenadas[0] + (1.2*escala), coordenadas[1] + (0.2*escala), 10);
-        tela.filledCircle(coordenadas[0] + (1.2*escala), coordenadas[1] - (0.2*escala), 10);
+            // Dois pontos
+            tela.setPenColor(corAceso);
+            tela.filledCircle(coordenadas[0] + (1.2*escala), coordenadas[1] + (0.2*escala), 10);
+            tela.filledCircle(coordenadas[0] + (1.2*escala), coordenadas[1] - (0.2*escala), 10);
 
-        desenharSegundo(segundo); 
+            // Desenha os dígitos que representam o segundo
+            desenharSegundo(segundo);
+            return true;
+        }
     }
 
     /**
@@ -163,27 +183,112 @@ public class Visor {
      * @return apenas o dígito da unidade do número informado
      */
     private int obtemUnidade(int numero){
-        return numero - ((numero/10)*10);
+        return numero%10;
     }
 
     /**
-     * Gera uma versão mais escura da cor informada
+     * Gera uma versão oposta da cor informada
      * @param cor cor a ser versionada
-     * @return versão escura da cor informada. Caso a cor informada
-     * já seja escura, a mesma é retornada sem ajustes.
+     * @return versão aproximadamente oposta à cor informada.
+     * Se a cor informada for clara, retorna uma cor escura e vice-versa.
      */
-    private static Color obtemCorApagada(Color cor){
+    private Color obtemCorApagada(Color cor){
         int vermelho = cor.getRed();
         int verde = cor.getGreen();
         int azul = cor.getBlue();
 
-        if (vermelho < LIMIAR_DE_CORES && verde < LIMIAR_DE_CORES && azul < LIMIAR_DE_CORES) return cor;
-        else {
-            int vermelhoApagado = (int) Math.round(cor.getRed()*0.2);
-            int verdeApagado = (int) Math.round(cor.getGreen()*0.2);
-            int azulApagado = (int) Math.round(cor.getBlue() * 0.2);
-            Color personalizada = new Color(vermelhoApagado, verdeApagado, azulApagado);
-            return personalizada;
+        int vermelhoApagado;
+        int verdeApagado;
+        int azulApagado;
+
+        if (vermelho <= LIMIAR_DE_CORES && verde <= LIMIAR_DE_CORES && azul <= LIMIAR_DE_CORES) {
+            vermelhoApagado = 250 - (int) Math.round(cor.getRed() * 0.5);
+            verdeApagado = 250 - (int) Math.round(cor.getGreen() * 0.5);
+            azulApagado = 250 - (int) Math.round(cor.getBlue() * 0.5);
+        } else {
+            vermelhoApagado = (int) Math.round(cor.getRed() * 0.2);
+            verdeApagado = (int) Math.round(cor.getGreen() * 0.2);
+            azulApagado = (int) Math.round(cor.getBlue() * 0.2);
         }
+        return new Color(vermelhoApagado, verdeApagado, azulApagado);
+    }
+
+    /**
+     * Obtém as coordenadas atuais do visor
+     * @return vetor de double com as coordenadas X e Y do visor
+     */
+    public double[] getCoordenadas() {
+        return coordenadas;
+    }
+
+    /**
+     * Obtém a cor para os segmentos apagados
+     * @return cor dos segmentos apagados
+     */
+    public Color getCorApagado() {
+        return corApagado;
+    }
+
+    /**
+     * Obtém a cor para os segmentos acesos
+     * @return cor dos segmentos acesos
+     */
+    public Color getCorAceso() {
+        return corAceso;
+    }
+
+    /**
+     * Obtém a escala relativa atual
+     * @return escala relativa atual
+     */
+    public int getEscala() {
+        return escala;
+    }
+
+    /**
+     * Obtém onde o visor será desenhado
+     * @return objeto do tipo Draw
+     */
+    public Draw getTela() {
+        return tela;
+    }
+
+    /**
+     * Define as coordenadas do visor
+     * @param coordenadas vetor de double contendo as coordenadas X e Y
+     */
+    public void setCoordenadas(double[] coordenadas) {
+        this.coordenadas = coordenadas;
+    }
+
+    /**
+     * Define a cor dos segmentos apagados
+     * @param corApagado objeto Color
+     */
+    public void setCorApagado(Color corApagado) {
+        this.corApagado = corApagado;
+    }
+
+    /**
+     * Define a cor dos segmentos acesos
+     * @param corApagado objeto Color
+     */
+    public void setCorAceso(Color corAceso) {
+        this.corAceso = corAceso;
+    }
+
+    /**
+     * Define a escala relativa do visor
+     */
+    public void setEscala(int escala) {
+        this.escala = escala;
+    }
+
+    /**
+     * Define onde o visor será desenhado
+     * @param tela objeto do tipo Draw
+     */
+    public void setTela(Draw tela) {
+        this.tela = tela;
     }
 }
