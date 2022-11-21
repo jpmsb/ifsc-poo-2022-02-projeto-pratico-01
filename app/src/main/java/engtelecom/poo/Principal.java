@@ -22,7 +22,7 @@ public class Principal {
 
         ContadorRegressivo cr = new ContadorRegressivo(d, new double[]{400,600}, 100, d.PINK, 1,30,00);
 
-        while (true){
+        while (! cro.fim()){
             cro.conta();
             cr.conta();
             d.show();
