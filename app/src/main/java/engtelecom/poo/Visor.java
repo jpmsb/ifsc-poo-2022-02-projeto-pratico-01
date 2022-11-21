@@ -51,7 +51,7 @@ public class Visor {
      * @param corAceso cor dos segmentos acesos
      * @param corApagado cor dos segmentos apagados
      */
-    public Visor(Draw tela, double[] coordenadas, int escala, Color corAceso, Color corApagado) {
+    public Visor(Draw tela, double[] coordenadas, double escala, Color corAceso, Color corApagado) {
         this.coordenadas = coordenadas;
         this.corApagado = corApagado;
         this.corAceso = corAceso;
@@ -75,7 +75,7 @@ public class Visor {
      * @param escala tamanho proporcional do visor
      * @param corAceso cor dos segmentos acesos
      */
-    public Visor(Draw tela, double[] coordenadas, int escala, Color corAceso){
+    public Visor(Draw tela, double[] coordenadas, double escala, Color corAceso){
         this.tela = tela;
         this.coordenadas = coordenadas;
         this.escala = escala;
