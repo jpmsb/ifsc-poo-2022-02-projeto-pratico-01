@@ -100,7 +100,7 @@ public class Cronometro {
      * @param corAceso cor dos segmentos acesos
      * @param corApagado cor dos segmentos apagados
      */
-    public Cronometro(Draw tela, double[] coordenadas, int escala, Color corAceso, Color corApagado){
+    public Cronometro(Draw tela, double[] coordenadas, double escala, Color corAceso, Color corApagado){
         this.tela = tela;
         this.coordenadas = coordenadas;
         setEscala(escala);
@@ -125,7 +125,7 @@ public class Cronometro {
      * @param minutoInicial minuto de partida
      * @param segundoInicial segundo de partida
      */
-    public Cronometro(Draw tela, double[] coordenadas, int escala, Color corAceso, Color corApagado, int horaInicial, int minutoInicial, int segundoInicial){
+    public Cronometro(Draw tela, double[] coordenadas, double escala, Color corAceso, Color corApagado, int horaInicial, int minutoInicial, int segundoInicial){
         this(tela, coordenadas, escala, corAceso, corApagado);
         setHoraInicial(horaInicial);
         this.horaAtual = this.horaInicial;
@@ -149,7 +149,7 @@ public class Cronometro {
      * @param minutoInicial minuto de partida
      * @param segundoInicial segundo de partida
      */
-    public Cronometro(Draw tela, double[] coordenadas, int escala, Color corAceso, int horaInicial, int minutoInicial, int segundoInicial){
+    public Cronometro(Draw tela, double[] coordenadas, double escala, Color corAceso, int horaInicial, int minutoInicial, int segundoInicial){
         this(tela, coordenadas, escala, corAceso);
         setHoraInicial(horaInicial);
         this.horaAtual = this.horaInicial;
@@ -171,7 +171,7 @@ public class Cronometro {
      * @param escala escala relativa do visor do cronômetro
      * @param corAceso cor dos segmentos acesos
      */
-    public Cronometro(Draw tela, double[] coordenadas, int escala, Color corAceso){
+    public Cronometro(Draw tela, double[] coordenadas, double escala, Color corAceso){
         this.tela = tela;
         this.coordenadas = coordenadas;
         this.escala = escala;
