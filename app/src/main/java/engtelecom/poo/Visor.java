@@ -33,7 +33,7 @@ public class Visor {
     /**
      * Tamanho proporcional do visor
      */
-    private int escala;
+    private double escala;
 
     /**
      * Objeto onde o visor será desenhado
@@ -241,7 +241,7 @@ public class Visor {
      * Obtém a escala relativa atual
      * @return escala relativa atual
      */
-    public int getEscala() {
+    public double getEscala() {
         return escala;
     }
 
@@ -280,7 +280,7 @@ public class Visor {
     /**
      * Define a escala relativa do visor
      */
-    public void setEscala(int escala) {
+    public void setEscala(double escala) {
         this.escala = escala;
     }
 
